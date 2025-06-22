@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Inspeção de Painel Elétrico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos para a visualização em tela */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9eef2;
+        }
+
+        .page-container {
+            max-width: 8.5in; /* Largura de papel carta/A4 */
+            min-height: 11in; /* Altura de papel carta/A4 */
+            margin: 2rem auto;
+            background: white;
+            padding: 2.5rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .editable {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 2px 0;
+            background-color: transparent;
+        }
+        .editable:focus {
+            outline: none;
+            border-bottom: 2px solid #3b82f6;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #777;
+            padding: 6px;
+            text-align: left;
+            font-size: 14px;
+        }
+        thead th {
+            background-color: #f3f4f6;
+            font-weight: bold;
+        }
+
+        /* ESTILOS CRÍTICOS PARA IMPRESSÃO EM UMA PÁGINA */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 1.5cm; /* Margem de impressão */
+            }
+
+            body {
+                background-color: #fff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .page-container {
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+                min-height: initial !important;
+            }
+            
+            /* Ajustes finos para compactação */
+            th, td {
+                font-size: 9pt !important;
+                padding: 3px 4px !important;
+            }
+            h1 { font-size: 16pt !important; margin-bottom: 12px !important; }
+            h3 { font-size: 11pt !important; margin-top: 10px !important; margin-bottom: 4px !important; }
+            .info-grid {
+                gap: 0 1rem !important;
+                font-size: 9pt !important;
+            }
+            .editable {
+                font-size: 9pt !important;
+                padding: 1px 0 !important;
+            }
+            input[type="radio"] {
+                width: 12px !important;
+                height: 12px !important;
+            }
+            #obs-gerais {
+                 height: 5em !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        
+        <header class="flex justify-between items-center no-print mb-8">
+            <h2 class="text-xl text-gray-600">Formulário Editável</h2>
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                Imprimir
+            </button>
+        </header>
+
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Checklist de Inspeção de Painel Elétrico</h1>
+
+        <!-- Seção de Informações Gerais -->
+        <div class="info-grid grid grid-cols-2 gap-x-8 gap-y-4 mb-6">
+            <div class="flex items-baseline"><span class="font-bold mr-2">Unidade:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline"><span class="font-bold mr-2">Tag do Painel:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline col-span-2"><span class="font-bold mr-2">Local Instalado:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline"><span class="font-bold mr-2">Data:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline"><span class="font-bold mr-2">Início:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline"><span class="font-bold mr-2">Término:</span><input type="text" class="editable"></div>
+        </div>
+
+        <!-- Seção Disjuntor Geral -->
+        <h3 class="font-bold text-gray-800">Disjuntor Geral</h3>
+        <table>
+            <thead>
+                <tr><th>Medição</th><th>L1</th><th>L2</th><th>L3</th><th class="w-1/4">Observações</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Corrente Nominal (A)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-0" rowspan="5"><textarea class="w-full h-full border-0 focus:ring-0 bg-transparent resize-none p-1"></textarea></td></tr>
+                <tr><td>Tensão Nominal (V)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
+                <tr><td>Corrente Medida (A)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
+                <tr><td>Tensão Medida P+N (V)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
+                <tr><td>Temperatura nos pólos (°C)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
+            </tbody>
+        </table>
+
+        <!-- Seção Itens de Verificação -->
+        <h3 class="font-bold text-gray-800">Itens de Verificação</h3>
+        <table>
+            <thead>
+                <tr><th class="w-2/5">Item</th><th class="text-center">OK</th><th class="text-center">NOK</th><th class="text-center">N/A</th><th>Observações</th></tr>
+            </thead>
+            <tbody id="verification-items-body">
+                <!-- Linhas geradas via JS -->
+            </tbody>
+        </table>
+
+        <!-- Observações Gerais -->
+        <h3 class="font-bold text-gray-800">Observações: <span class="font-normal">(Se necessário melhoria, relate neste campo)</span></h3>
+        <textarea id="obs-gerais" rows="3" class="w-full border border-gray-400 rounded p-2 mt-1"></textarea>
+
+        <!-- Assinatura -->
+        <div class="mt-8 pt-4">
+            <span class="font-bold mr-2">Técnico Inspetor:</span>
+            <input type="text" class="editable" style="width: 50%;">
+        </div>
+    </div>
+
+    <script>
+        const items = [
+            'Diagrama', 'Proteção partes vivas', 'Sinalização do Painel',
+            'Integridade de Contatos', 'Integridade do Cabeamento', 'Pontos de Umidade',
+            'Pontos de aquecimento', 'Terminais', 'Aterramento da porta',
+            'Reaperto de conexões', 'Limpeza do Painel', 'Regulagem de componentes',
+            'Teste de Componentes', 'Sinalização do Painel'
+        ];
+        const tableBody = document.getElementById('verification-items-body');
+        items.forEach(itemText => {
+            const safeName = itemText.replace(/\s+/g, '-');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${itemText}</td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
+                <td class="p-1"><input type="text" class="w-full h-full border-0 focus:ring-0 bg-transparent p-0"></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

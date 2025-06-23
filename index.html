@@ -8,7 +8,7 @@
     <style>
         /* Estilos para a visualização em tela */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', Arial, sans-serif;
             background-color: #e9eef2;
         }
 
@@ -44,11 +44,32 @@
             padding: 6px;
             text-align: left;
             font-size: 14px;
+            vertical-align: top; /* Alinha o conteúdo no topo */
         }
         thead th {
             background-color: #f3f4f6;
             font-weight: bold;
+            text-align: center;
         }
+
+        /* Melhorando os textareas que agora quebram linha */
+        textarea.auto-grow {
+            width: 100%;
+            border: none;
+            background: transparent;
+            resize: none;
+            overflow: hidden; /* Remove a barra de rolagem */
+            padding: 2px;
+            box-sizing: border-box;
+            display: block;
+        }
+        textarea.auto-grow:focus {
+             outline: none;
+        }
+        td .auto-grow {
+             padding: 0;
+        }
+
 
         /* ESTILOS CRÍTICOS PARA IMPRESSÃO EM UMA PÁGINA */
         @media print {
@@ -99,6 +120,9 @@
             #obs-gerais {
                  height: 5em !important;
             }
+            textarea {
+                font-size: 9pt !important;
+            }
         }
     </style>
 </head>
@@ -120,7 +144,7 @@
             <div class="flex items-baseline"><span class="font-bold mr-2">Unidade:</span><input type="text" class="editable"></div>
             <div class="flex items-baseline"><span class="font-bold mr-2">Tag do Painel:</span><input type="text" class="editable"></div>
             <div class="flex items-baseline col-span-2"><span class="font-bold mr-2">Local Instalado:</span><input type="text" class="editable"></div>
-            <div class="flex items-baseline"><span class="font-bold mr-2">Data:</span><input type="text" class="editable"></div>
+            <div class="flex items-baseline"><span class="font-bold mr-2">Data:</span><input type="text" class="editable" value=""></div>
             <div class="flex items-baseline"><span class="font-bold mr-2">Hora Início:</span><input type="text" class="editable"></div>
             <div class="flex items-baseline"><span class="font-bold mr-2">Hora Término:</span><input type="text" class="editable"></div>
         </div>
@@ -135,7 +159,10 @@
                 <tr><th>Medição</th><th>L1</th><th>L2</th><th>L3</th><th class="w-1/4">Observações</th></tr>
             </thead>
             <tbody>
-                <tr><td>Corrente Nominal (A)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-0" rowspan="5"><textarea class="w-full h-full border-0 focus:ring-0 bg-transparent resize-none p-1"></textarea></td></tr>
+                <tr><td>Corrente Nominal (A)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-0" rowspan="5">
+                    <!-- MODIFICADO: Este textarea agora cresce com o conteúdo -->
+                    <textarea rows="5" class="auto-grow w-full border-0 focus:ring-0 bg-transparent p-1" oninput="autoGrow(this)"></textarea>
+                </td></tr>
                 <tr><td>Tensão Nominal (V)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
                 <tr><td>Corrente Medida (A)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
                 <tr><td>Tensão Medida P+N (V)</td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td><td class="p-1"><input type="text" class="w-full text-center border-0 focus:ring-0 bg-transparent p-0"></td></tr>
@@ -144,7 +171,7 @@
         </table>
 
         <!-- Seção Itens de Verificação -->
-        <h3 class="font-bold text-gray-800">Itens de Verificação</h3>
+        <h3 class="font-bold text-gray-800 mt-4">Itens de Verificação</h3>
         <table>
             <thead>
                 <tr><th class="w-2/5">Item</th><th class="text-center">OK</th><th class="text-center">NOK</th><th class="text-center">N/A</th><th>Observações</th></tr>
@@ -153,9 +180,9 @@
                 <!-- Linhas geradas via JS -->
             </tbody>
         </table>
-
+        
         <!-- Observações Gerais -->
-        <h3 class="font-bold text-gray-800">Observações: <span class="font-normal">(Se necessário melhoria, relate neste campo)</span></h3>
+        <h3 class="font-bold text-gray-800 mt-4">Observações: <span class="font-normal">(Se necessário melhoria, relate neste campo)</span></h3>
         <textarea id="obs-gerais" rows="3" class="w-full border border-gray-400 rounded p-2 mt-1"></textarea>
 
         <!-- Assinatura -->
@@ -166,6 +193,26 @@
     </div>
 
     <script>
+        /**
+         * Função para ajustar a altura de um textarea dinamicamente com base no seu conteúdo.
+         * @param {HTMLElement} element O elemento textarea.
+         */
+        function autoGrow(element) {
+            // Reseta a altura para recalcular a altura de rolagem corretamente.
+            element.style.height = 'auto'; 
+            // Define a altura para a altura de rolagem, fazendo com que ele se expanda.
+            element.style.height = (element.scrollHeight) + 'px';
+        }
+        
+        // Define a data atual no campo correspondente
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.querySelector('input[type="text"][class="editable"][value=""]');
+            if(dateInput) {
+                dateInput.value = new Date().toLocaleDateString('pt-BR');
+            }
+        });
+
+
         const items = [
             'Diagrama', 'Proteção partes vivas', 'Sinalização do Painel',
             'Integridade de Contatos', 'Integridade do Cabeamento', 'Pontos de Umidade',
@@ -175,14 +222,19 @@
         ];
         const tableBody = document.getElementById('verification-items-body');
         items.forEach(itemText => {
-            const safeName = itemText.replace(/\s+/g, '-');
+            // Cria um nome seguro para o atributo 'name' do radio button
+            const safeName = itemText.replace(/[^a-zA-Z0-9]/g, '-');
             const row = document.createElement('tr');
+            
+            // MODIFICADO: O campo de input para observações agora é um textarea com a função autoGrow.
             row.innerHTML = `
                 <td>${itemText}</td>
-                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
-                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
-                <td class="text-center align-middle"><input type="radio" name="${safeName}" class="h-4 w-4"></td>
-                <td class="p-1"><input type="text" class="w-full h-full border-0 focus:ring-0 bg-transparent p-0"></td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" value="ok" class="h-4 w-4"></td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" value="nok" class="h-4 w-4"></td>
+                <td class="text-center align-middle"><input type="radio" name="${safeName}" value="na" class="h-4 w-4" checked></td>
+                <td class="p-1">
+                    <textarea rows="1" class="auto-grow" oninput="autoGrow(this)"></textarea>
+                </td>
             `;
             tableBody.appendChild(row);
         });
